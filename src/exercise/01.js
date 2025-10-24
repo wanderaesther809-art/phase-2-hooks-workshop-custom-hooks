@@ -1,24 +1,25 @@
-import { useEffect } from "react";
+import { useState } from "react";
 
-/* ✅ create a new function called useDocumentTitle */
-/* 👀 export function useDocumentTitle() {} */
+// ✅ Create a custom hook
+function useCounter(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
 
-export default function Home() {
-  /* 
-    ✅ move the useEffect code into your useDocumentTitle function
-   then, call the useDocumentTitle hook in your component
-  */
-  useEffect(() => {
-    document.title = "Welcome to the home page!";
-  }, []);
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+
+  return { count, increment, decrement };
+}
+
+// ✅ Component using the custom hook
+export default function Counter() {
+  const { count, increment, decrement } = useCounter(0);
 
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>
-        To see the title change in the browser tab, click the 'Open in new tab'
-        link above
-      </p>
+      <h1>Counter App</h1>
+      <p>Current count: {count}</p>
+      <button onClick={increment}>Increase</button>
+      <button onClick={decrement}>Decrease</button>
     </div>
   );
 }

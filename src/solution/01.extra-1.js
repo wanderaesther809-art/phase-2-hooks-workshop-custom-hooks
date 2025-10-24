@@ -1,23 +1,17 @@
-import { useEffect } from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom";
+import Counter from "../exercise/01";
 
-export function useDocumentTitle(title) {
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
-}
+test("counter works with multiple increments and decrements", () => {
+  render(<Counter />);
 
-function Home() {
-  useDocumentTitle("testing");
+  const increase = screen.getByRole("button", { name: /increase/i });
+  const decrease = screen.getByRole("button", { name: /decrease/i });
 
-  return (
-    <div>
-      <h1>Home Page</h1>
-      <p>
-        To see the title change in the browser tab, click the 'Open in new tab'
-        link above
-      </p>
-    </div>
-  );
-}
+  userEvent.click(increase);
+  userEvent.click(increase);
+  userEvent.click(decrease);
 
-export default Home;
+  expect(screen.getByText("Current count: 1")).toBeInTheDocument();
+});

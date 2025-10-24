@@ -1,23 +1,24 @@
-import { useEffect } from "react";
+import { useState } from "react";
 
-export function useDocumentTitle() {
-  useEffect(() => {
-    document.title = "Welcome to the home page!";
-  }, []);
+// Custom hook in solution
+function useCounter(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+
+  return { count, increment, decrement };
 }
 
-function Home() {
-  useDocumentTitle();
+export default function CounterSolution() {
+  const { count, increment, decrement } = useCounter(0);
 
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>
-        To see the title change in the browser tab, click the 'Open in new tab'
-        link above
-      </p>
+      <h1>Counter App</h1>
+      <p>Current count: {count}</p>
+      <button onClick={increment}>Increase</button>
+      <button onClick={decrement}>Decrease</button>
     </div>
   );
 }
-
-export default Home;

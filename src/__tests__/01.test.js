@@ -1,20 +1,14 @@
-import { renderHook, act } from "@testing-library/react-hooks";
-import { useDocumentTitle } from "../exercise/01";
-// import { useDocumentTitle } from "../solution/01";
+import { render, screen } from "@testing-library/react";
+import Home from "../exercise/Home";
 
-describe("Exercise 01", () => {
-  test("is exported as a named export", () => {
-    try {
-      expect(typeof useDocumentTitle).toBe("function");
-    } catch (e) {
-      throw new Error("Make sure to export your hook!");
-    }
-  });
+test("renders Home page heading", () => {
+  render(<Home />);
+  expect(screen.getByText(/home page/i)).toBeInTheDocument();
+});
 
-  test("sets the document title", () => {
-    renderHook(() => useDocumentTitle());
-    act(() => {
-      expect(document.title).toBe("Welcome to the home page!");
-    });
-  });
+test("renders Home page paragraph", () => {
+  render(<Home />);
+  expect(
+    screen.getByText(/to see the title change in the browser tab/i)
+  ).toBeInTheDocument();
 });
